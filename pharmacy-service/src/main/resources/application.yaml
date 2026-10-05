@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: pharmacy-service
+
+  config:
+    import: "configserver:http://localhost:8888"
+    cloud:
+      config:
+        fail-fast: true
+        retry:
+          initial-interval: 1000
+          max-attempts: 6
+          max-interval: 2000
+          multiplier: 1.5
+
+  # Feign không dùng CB của Feign — CB do @CircuitBreaker ở Gateway quản lý
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: false
+
+# Actuator — expose thêm circuitbreakers để debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, info, circuitbreakers, circuitbreakerevents
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true

@@ -1,0 +1,19 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          # Đường dẫn Git repo
+          uri: file:///D:/BACKEND_BT/MD04/Session9/ex3/pharmacy-config-repo
+          # Nhánh Git
+          default-label: main
+
+logging:
+  level:
+    org.springframework.cloud.config: INFO
